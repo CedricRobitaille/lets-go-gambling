@@ -76,9 +76,9 @@ const slotMachine = [
 const powerups = ["🥠", "🎃", "🏆"];
 
 const inventory = {
-  money: 0,
+  money: 10,
   spinCount: 0,
-  luck: 1, // 1 = Base Luck, 2 = Moderate Luck, 4 = VERY LUCKY
+  luck: 6, // 1 = Base Luck, 2 = Moderate Luck, 4 = VERY LUCKY
   abilities: [],
 }
 
@@ -108,6 +108,9 @@ const sleep = function (delay) {
     // Busy-wait: blocks everything
   }
 }
+
+
+
 
 
 /** Function that returns a weighted array of slot characters
@@ -149,11 +152,11 @@ const weightedSelection = () => {
  *  
  */ 
 const slotMachineHome = () => {
-
+  console.clear();
 
   const spinWheel = (quantity) => {
     // Does the actual spinning
-
+    
 
     const spin = () => {
       // System to cycle through the spin
@@ -195,6 +198,7 @@ const slotMachineHome = () => {
 
     // Input and Display when you return to the Spin Screen
     console.clear(); // Resets viewport
+    console.log(inventory.spinCount)
     displaySlot(1); // "Ready to spin?"
     for (let i = 0; i < quantity; i++) { // Grants (quantity) spins. Request spin input before spinning
       spinInput();
@@ -203,27 +207,42 @@ const slotMachineHome = () => {
         spinBuy();
       }
     }
+    
 
   }
 
-  const spinBuy = () => { // 
+  const spinBuy = () => { // Purchase Spins
     console.clear();
     displaySlot(3)
     let input = prompt("> ");
     if (input.toLowerCase() === "3") {
-      spinWheel(3);
+      if (inventory.money >= 5) {
+        inventory.money -= 5;
+        inventory.spinCount += 3;
+        spinWheel(3);
+      } else {
+        slotMachineHome();
+      }
     } else if (input.toLowerCase() === "5") {
-      spinWheel(5);
+      if (inventory.money >= 15) {
+        inventory.money -= 15;
+        inventory.spinCount += 5;
+        spinWheel(5);
+      } else {
+        slotMachineHome();
+      }
     } else if (input.toLowerCase() === "leave") {
-
-    } else {
-      console.clear();
       slotMachineHome();
+    } else {
+      spinBuy();
     }
   }
 
-  displaySlot(2)
-  let input = prompt("> ");
+
+  // The stuff that happens when the use loads into the gambling machine!
+
+  displaySlot(2)  //loads the viewport
+  let input = prompt("> "); // prompt 
   if (input.toLowerCase() === "spin") {
     spinBuy(3);
   } else if (input.toLowerCase() === "shop") {
@@ -268,7 +287,7 @@ const location = (location) => {
 
 
 
-
+// Function to display the slot machine
 const displaySlot = (slotMessage) => {
   slotMessage = screenMessages[slotMessage];
   const line1 = slotMachine[0].join(" ")
@@ -283,7 +302,7 @@ const displaySlot = (slotMessage) => {
 ⇅                  ⇅
 ⇅⇆ ⇆ ⇆ ⇆ ⇆ ⇆ ⇆ ⇆ ⇆ ⇆
 ⇅       SPIN       ⇅  
-⇅⇆ ⇆ ⇆ ⇆ ⇆ ⇆ ⇆ ⇆ ⇆ ⇅   Money: $100
+⇅⇆ ⇆ ⇆ ⇆ ⇆ ⇆ ⇆ ⇆ ⇆ ⇅   Money: ${inventory.money}
 ${slotMessage}`)
 }
 
