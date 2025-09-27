@@ -1,4 +1,4 @@
-# Scary Forst III
+# Scary Forest III
 *A terminal-based choose-your-own-adventure game built with node.js and prompt-sync.*
 
 ---
@@ -106,7 +106,7 @@ if (success === true) {
 
 ---
 
-### Branding Story Functions
+### Branching Story Functions
 Throughout the story, the user is faced with branching stories. The challenge we faced was ensuring that all branches were attempted, regardless of their starting path.
 
 ```js
@@ -146,7 +146,7 @@ function loseHealth(damage) {
     console.log(`Health is now ${characterObjects.health}`)
 }
 ```
-Through this function, we were able to:
+**Through this function, we were able to:**
 - Pass damage amounts
 - Reduce damage intake with defense
 - Reflect final damage towards user's HP
@@ -154,3 +154,112 @@ This centralized the combat logic, and simplified further development.
 
 ---
 
+### Recursive Functions
+When faced with a complex prompt system like in *the merchant* section, we had to incorporate a Recursive Function so that the user can loop through the prompt selection as many times as needed.
+
+```js
+function merchant() {
+  const userInput = prompt('What would you like to buy?');
+  if (userInput === "Armor") {
+    // Give the user Armor
+    merchant(); // Loop back through the merchant function so they can keep shopping.
+  } else if (userInput === "Leave") {
+    // By not calling the `merchant()` function, the user exits the recursive loop.
+  } else {
+    // A non-valid input was provided. Log an error, and prompt the user again
+    merchant(); // Loop back through the merchant function so they can keep shopping.
+  }
+}
+```
+**This recursive function does the following:**
+- Retrieves the user's input
+- Based on their input...
+  - **Valid Purchase** -> Gives user item, then restarts the function so they can keep shopping
+  - **Leave Request** -> By not re-initiating the function, the user exits the recursive loop and continues on their journey
+  - **Invalid Input** -> Informs user of bad-input, and re-issues a shop new prompt.
+
+---
+
+### Fight Logic
+For the final boss fight, we initiated a continuous fight cycle. This cycles leverages recursive functions, recursive functions within recursive functions, and complex conditional statements.
+
+##### Boss Loop
+```js
+function bossFight() {
+  // Fight Information
+  const userInput = prompt("What would you like to do?");
+  if (userInput === "Attack") {
+    // Code to Attack
+  } else if (userInput === "Inventory") {
+    checkInventory() // Starts a inner recursive loop for the inventory selection
+  } else if (userInput === "Ranged Attack" && character.class === "Archer") {
+    // Attack specific to archer
+    bossFight() // Restarts boss loop
+  } else {
+    // No valid input provided
+    bossFight() // Restarts boss loop
+  }
+}
+```
+This recursive loop checks for the user input. Depending on their input, they do one of the following actions:
+1. Attack Cycle, then restarts the boss-fight loop
+2. Enter the Inventory Loop, to select healing potions, and show items.
+3. Class-Specific actions, then restarts the boss-fight loop
+4. Catches invalid inputs, then restarts the boss-cycle loop
+
+##### Fight Loop
+```js
+function bossFight() {
+  if (userInput === "Attack") {
+    // Damage Boss
+    if (boss.health > 0) { // Is boss still alive after the attack?
+      // Boss attacks user
+      if (user.health > 0) { // Is user still alive after being attacked?
+        bossFight() // User restarts fight cycle - Recursive Loop
+      } else { // User ran out of health
+        loseSequence() // You lose
+      }
+    } else { // Boss ran out of health
+      winSequence() // You win
+    }
+  }
+}
+```
+The Fight loop does a few nice things for us.
+1. Deals damage to the boss
+2. Deals damage to the user
+3. Checks if the boss is dead, then sends them to the win screen
+4. Checks if the user is dead, then sends them to the lose screen
+
+##### Inventory Loop
+```js
+function bossFight() {
+  if (userInput === "Inventory") {
+    function checkInventory() {
+      // Lists the items in the user's inventory, and outlines actions user can take.
+      const newUserInput = prompt("What would you like to do?");
+      if (newUserInput === "Use Potion" && user.inventory.positions > 0) { // User inputs "Use Potion, and there is a potion to consume.
+        // User consumes Potion
+        checkInventory() // Restarts the Inventory loop so they can keep selecting items.
+      } else if (newUserInput === "Leave") {
+        bossFight() // Exits the checkInventory loop, but continues the fight loop.
+      } else { // Invalid User Input
+        checkInventory() // Restarts the Inventory loop
+      }
+    }
+    checkInventory() // Initiates the Inventory Recursive Loop
+  }
+}
+```
+Lastly, this lovely little recursive function accepts user inputs, and does the following:
+1. Uses potion **if** there are enough potions to use
+2. Checks for invalid inputs
+3. Returns the user back to the fight sequence
+
+---
+
+> [!NOTE]
+> This Project was developed by:
+> [Cedric Robitaille](https://github.com/CedricRobitaille)
+> [Felix Romero](https://github.com/FelixR77)
+> [John Shear]()
