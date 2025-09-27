@@ -3,7 +3,7 @@
 
 ---
 
-## Overview
+### Overview
 **Scary Forest III** is a text-based choose-your-own-adventure game that runs in the terminal. The player’s goal is to defeat three monstrous beasts to cure the dying Father Tree.
 
 The adventure begins with a daring escape from a monster, followed by a river ride, branching paths, and epic boss battles. Along the way, the player encounters **Quick-Time Events** and branching storylines that respond to their choices.
@@ -15,14 +15,12 @@ The adventure begins with a daring escape from a monster, followed by a river ri
 
 ---
 
-## Technical Challenges
+### Technical Challenges
 This project is powered by Node.js using the prompt-sync package for synchronous input. Because `prompt-sync` blocks the event loop, traditional asynchronous solutions like `setTimeout` were not possible. Instead, we developed custom workarounds using `Date.now()` for time-based events.
 
 ---
 
-## Development Process
-
----
+### Development Process
 
 ### Core Game Objects
 We began by defining two main object types:
