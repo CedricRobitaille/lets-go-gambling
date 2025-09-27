@@ -180,7 +180,7 @@ function merchant() {
 For the final boss fight, we initiated a continuous fight cycle. This cycles leverages recursive functions, recursive functions within recursive functions, and complex conditional statements.
 <br/>
 
-##### Boss Loop
+#### Boss Loop
 ```js
 function bossFight() {
   // Fight Information
@@ -205,7 +205,7 @@ This recursive loop checks for the user input. Depending on their input, they do
 4. Catches invalid inputs, then restarts the boss-cycle loop
 <br/>
 
-##### Fight Loop
+#### Fight Loop
 ```js
 function bossFight() {
   if (userInput === "Attack") {
@@ -230,7 +230,7 @@ The Fight loop does a few nice things for us.
 4. Checks if the user is dead, then sends them to the lose screen
 <br/>
 
-##### Inventory Loop
+####  Inventory Loop
 ```js
 function bossFight() {
   if (userInput === "Inventory") {
