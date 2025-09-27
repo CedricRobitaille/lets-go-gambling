@@ -1,9 +1,9 @@
 # Scary Forest III
 *A terminal-based choose-your-own-adventure game built with node.js and prompt-sync.*
 
----
 
-### Overview
+
+## Overview
 **Scary Forest III** is a text-based choose-your-own-adventure game that runs in the terminal. The player’s goal is to defeat three monstrous beasts to cure the dying Father Tree.
 
 The adventure begins with a daring escape from a monster, followed by a river ride, branching paths, and epic boss battles. Along the way, the player encounters **Quick-Time Events** and branching storylines that respond to their choices.
@@ -13,18 +13,14 @@ The adventure begins with a daring escape from a monster, followed by a river ri
 - Quick-Time Events implemented within a synchronous environment
 - Player progression mechanics like stats, inventory, and combat
 
----
 
-### Technical Challenges
+
+## Technical Challenges
 This project is powered by Node.js using the prompt-sync package for synchronous input. Because `prompt-sync` blocks the event loop, traditional asynchronous solutions like `setTimeout` were not possible. Instead, we developed custom workarounds using `Date.now()` for time-based events.
 
----
 
-### Development Process
 
----
-
-### Core Game Objects
+## Core Game Objects
 We began by defining two main object types:
 - Player Object holds
   - Health
@@ -39,9 +35,9 @@ We began by defining two main object types:
 
 This structure gives us a consistent system to handle combat and progression.
 
----
 
-### Branched Tutorial Paths
+
+## Branched Tutorial Paths
 Players choose a class (e.g., Archer, Rogue), which determines their *tutorial route*.
 Branching was implemented using simple conditional logic:
 
@@ -55,9 +51,9 @@ if (class === "rogue") {
 ```
 This allowed up to set up unique story introductions while keeping logic modular.
 
----
 
-### Quick-Time Events
+
+## Quick-Time Events
 The greatest challenge faced was building a system for Quick-Time Events in a synchronous environment.
 
 ```js
@@ -82,9 +78,9 @@ function quicktime(event, action, time) {
 - If elapsed > time limit -> fail. Otherwise -> succeed.
 This bypasses the blocking nature of `prompt-sync` while still giving a sense of urgency!
 
----
 
-### Multi-Staged Quick-Time Event Chains
+
+## Multi-Staged Quick-Time Event Chains
 When players encounter multiple quick-time events, we needed a way to track concurrent successes/failures across a chain of events.
 
 ```js
@@ -104,9 +100,9 @@ if (success === true) {
 - On failure, set `success = false` which skips the remaining checks
 - At the end, apply penalities for failure, and rewards for success
 
----
 
-### Branching Story Functions
+
+## Branching Story Functions
 Throughout the story, the user is faced with branching stories. The challenge we faced was ensuring that all branches were attempted, regardless of their starting path.
 
 ```js
@@ -134,9 +130,9 @@ function wolfFight() {
   3. If yes, send the player to the other path
 This makes sure that both paths were always experiences, regardless of their order.
 
----
 
-### Stat Integration
+
+## Stat Integration
 Initially, the **defense stat** wasn't considered.
 So, instead of manually calculating reductions in every battle, we built a help function!
 
@@ -152,9 +148,9 @@ function loseHealth(damage) {
 - Reflect final damage towards user's HP
 This centralized the combat logic, and simplified further development.
 
----
 
-### Recursive Functions
+
+## Recursive Functions
 When faced with a complex prompt system like in *the merchant* section, we had to incorporate a Recursive Function so that the user can loop through the prompt selection as many times as needed.
 
 ```js
@@ -178,7 +174,7 @@ function merchant() {
   - **Leave Request** -> By not re-initiating the function, the user exits the recursive loop and continues on their journey
   - **Invalid Input** -> Informs user of bad-input, and re-issues a shop new prompt.
 
----
+
 
 ### Fight Logic
 For the final boss fight, we initiated a continuous fight cycle. This cycles leverages recursive functions, recursive functions within recursive functions, and complex conditional statements.
