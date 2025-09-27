@@ -13,12 +13,12 @@ The adventure begins with a daring escape from a monster, followed by a river ri
 - Quick-Time Events implemented within a synchronous environment
 - Player progression mechanics like stats, inventory, and combat
 
-
+<br/>
 
 ## Technical Challenges
 This project is powered by Node.js using the prompt-sync package for synchronous input. Because `prompt-sync` blocks the event loop, traditional asynchronous solutions like `setTimeout` were not possible. Instead, we developed custom workarounds using `Date.now()` for time-based events.
 
-
+<br/>
 
 ## Core Game Objects
 We began by defining two main object types:
@@ -35,7 +35,7 @@ We began by defining two main object types:
 
 This structure gives us a consistent system to handle combat and progression.
 
-
+<br/>
 
 ## Branched Tutorial Paths
 Players choose a class (e.g., Archer, Rogue), which determines their *tutorial route*.
@@ -51,7 +51,7 @@ if (class === "rogue") {
 ```
 This allowed up to set up unique story introductions while keeping logic modular.
 
-
+<br/>
 
 ## Quick-Time Events
 The greatest challenge faced was building a system for Quick-Time Events in a synchronous environment.
@@ -78,7 +78,7 @@ function quicktime(event, action, time) {
 - If elapsed > time limit -> fail. Otherwise -> succeed.
 This bypasses the blocking nature of `prompt-sync` while still giving a sense of urgency!
 
-
+<br/>
 
 ## Multi-Staged Quick-Time Event Chains
 When players encounter multiple quick-time events, we needed a way to track concurrent successes/failures across a chain of events.
@@ -100,7 +100,7 @@ if (success === true) {
 - On failure, set `success = false` which skips the remaining checks
 - At the end, apply penalities for failure, and rewards for success
 
-
+<br/>
 
 ## Branching Story Functions
 Throughout the story, the user is faced with branching stories. The challenge we faced was ensuring that all branches were attempted, regardless of their starting path.
@@ -130,7 +130,7 @@ function wolfFight() {
   3. If yes, send the player to the other path
 This makes sure that both paths were always experiences, regardless of their order.
 
-
+<br/>
 
 ## Stat Integration
 Initially, the **defense stat** wasn't considered.
@@ -148,7 +148,7 @@ function loseHealth(damage) {
 - Reflect final damage towards user's HP
 This centralized the combat logic, and simplified further development.
 
-
+<br/>
 
 ## Recursive Functions
 When faced with a complex prompt system like in *the merchant* section, we had to incorporate a Recursive Function so that the user can loop through the prompt selection as many times as needed.
@@ -174,10 +174,11 @@ function merchant() {
   - **Leave Request** -> By not re-initiating the function, the user exits the recursive loop and continues on their journey
   - **Invalid Input** -> Informs user of bad-input, and re-issues a shop new prompt.
 
+<br/>
 
-
-### Fight Logic
+## Fight Logic
 For the final boss fight, we initiated a continuous fight cycle. This cycles leverages recursive functions, recursive functions within recursive functions, and complex conditional statements.
+<br/>
 
 ##### Boss Loop
 ```js
@@ -202,6 +203,7 @@ This recursive loop checks for the user input. Depending on their input, they do
 2. Enter the Inventory Loop, to select healing potions, and show items.
 3. Class-Specific actions, then restarts the boss-fight loop
 4. Catches invalid inputs, then restarts the boss-cycle loop
+<br/>
 
 ##### Fight Loop
 ```js
@@ -226,6 +228,7 @@ The Fight loop does a few nice things for us.
 2. Deals damage to the user
 3. Checks if the boss is dead, then sends them to the win screen
 4. Checks if the user is dead, then sends them to the lose screen
+<br/>
 
 ##### Inventory Loop
 ```js
@@ -251,7 +254,8 @@ Lastly, this lovely little recursive function accepts user inputs, and does the 
 1. Uses potion **if** there are enough potions to use
 2. Checks for invalid inputs
 3. Returns the user back to the fight sequence
-
+<br/>
+<br/>
 ---
 
 > [!NOTE]
