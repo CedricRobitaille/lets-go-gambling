@@ -22,6 +22,8 @@ This project is powered by Node.js using the prompt-sync package for synchronous
 
 ### Development Process
 
+---
+
 ### Core Game Objects
 We began by defining two main object types:
 1. Player Object
@@ -52,6 +54,18 @@ This allowed up to set up unique story introductions while keeping logic modular
 ### Quick-Time Events
 The greatest challenge faced was building a system for Quick-Time Events in a synchronous environment.
 
+```js
+function quicktime(event, action, time) {
+  let start = Date.now();
+  const userInput = prompt(`Press the letter "${action}" : `);
+  if (userInput === action && (Date.now() - start < time * 1000)) {
+    return true
+  } else { 
+    return false 
+  }
+}
+```
+
 **Our Solution:**
 - Define a `quicktime()` function with:
   - Event Description (To provide the user with an explaination for the quick-time story)
@@ -67,6 +81,17 @@ This bypasses the blocking nature of `prompt-sync` while still giving a sense of
 ### Multi-Staged Quick-Time Event Chains
 When players encounter multiple quick-time events, we needed a way to track concurrent successes/failures across a chain of events.
 
+```js
+let success = quickTime(`Quick! Grab your paddle`, `grab`, 6) // Returns true/false
+if (success === true) { 
+
+  success = quickTime(`Quick! Padding as hard as you can!`, `grab`, 6) // Returns true/false
+  if (success === true) {
+    // repeat
+  }
+}
+```
+
 **Our Approach:**
 - Use a `success` flag
 - Chain Quick-Time Events with `if (success)` conditions
@@ -77,6 +102,23 @@ When players encounter multiple quick-time events, we needed a way to track conc
 
 ### Branding Story Functions
 Throughout the story, the user is faced with branching stories. The challenge we faced was ensuring that all branches were attempted, regardless of their starting path.
+
+```js
+function bearFight() {
+  // Fight Sequence
+  player.bossCompletion.push("bear")        // Add bear to completion array
+  if (player.bossCompletion[0] != "wolf") { // If wolf hasn't been beat
+    wolfFight()                             // Fight the wolf.
+  }
+}
+function wolfFight() {
+  // Fight Sequence
+  player.bossCompletion.push("wolf")        // Add wolf to completion array
+  if (player.bossCompletion[0] != "bear") { // If bear hasn't been beat
+    bearFight()                             // Fight the bear.
+  }
+}
+```
 
 **To manage branching paths:**
 - Each path was wrapped inside a function
