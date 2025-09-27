@@ -26,10 +26,16 @@ This project is powered by Node.js using the prompt-sync package for synchronous
 
 ### Core Game Objects
 We began by defining two main object types:
-1. Player Object
-  - Holds health, defense, weapon type, inventory, and ingredients
-2. Monster Object
-  - Holds health, attack, and defense for each boss
+- Player Object holds
+  - Health
+  - Defense
+  - Weapon Type
+  - Inventory
+  - Ingredients
+- Monster Object holds for each boss
+  - Health
+  - Attack
+  - Defense
 
 This structure gives us a consistent system to handle combat and progression.
 
