@@ -261,6 +261,6 @@ Lastly, this lovely little recursive function accepts user inputs, and does the 
 
 > [!NOTE]
 > This Project was developed by:
-> [Cedric Robitaille](https://github.com/CedricRobitaille)
-> [Felix Romero](https://github.com/FelixR77)
+> [Cedric Robitaille](https://github.com/CedricRobitaille)<br/>
+> [Felix Romero](https://github.com/FelixR77)<br/>
 > [John Shear]()
