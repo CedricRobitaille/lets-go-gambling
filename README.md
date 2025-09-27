@@ -1,7 +1,7 @@
 # Scary Forst III
 *A terminal-based choose-your-own-adventure game built with node.js and prompt-sync.*
 
----
+
 
 ### Overview
 **Scary Forest III** is a text-based choose-your-own-adventure game that runs in the terminal. The player’s goal is to defeat three monstrous beasts to cure the dying Father Tree.
