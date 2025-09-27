@@ -255,7 +255,7 @@ Lastly, this lovely little recursive function accepts user inputs, and does the 
 2. Checks for invalid inputs
 3. Returns the user back to the fight sequence
 <br/>
-<br/>
+
 ---
 
 > [!NOTE]
